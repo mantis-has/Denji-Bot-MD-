@@ -18,7 +18,7 @@ const handler = async (m, {conn, participants, groupMetadata}) => {
 🏆 *Administradores:*
 ${listAdmin}
 
-💭 *CONFIGURACIÓN*
+💥 *CONFIGURACIÓN*
 
 ◈ *Welcome:* ${welcome ? '✅' : '❌'}
 ◈ *Detect:* ${detect ? '✅' : '❌'}  
