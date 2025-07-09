@@ -2,24 +2,24 @@
 import fetch from 'node-fetch'
 import db from '../lib/database.js'
 
-const img = 'https://qu.ax/EUstl.jpg'
+const img = 'https://qu.ax/UMbGb.jpg'
 
 // Canal info (personaliza aquí)
-const canalName = 'ECONOMIA DEL USUARIO'
-const canalDesc = '🩵̶۫̄͟Ⓜ︎𓏲𝐌500𓍲̈͜𝗨̴ᥣ̥𝗍̈rᥲ̄𓊓̵̬Bot⋆͙̈么͟͞──'
+const canalName = '⁖ฺ۟̇࣪·֗٬̤⃟🔥𝐃𝐞𝐧𝐣𝐢 ✰ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 ⬣ '
+const canalDesc = '⁖ฺ۟̇࣪·֗٬̤⃟🔥𝐃𝐞𝐧𝐣𝐢 ✰ 𝐁𝐨𝐭 𝐌𝐃 ⬣'
 const canalUrl = 'https://whatsapp.com/channel/120363418804796632'
 const dev = 'Félix Manuel'
 
 function obtenerRango(level) {
   if (level >= 100) return 'SUPREMO'
-  if (level >= 70) return '👑 REY DEL CAMINO'
-  if (level >= 50) return '⚔️ JEFE DE GUARDIA'
-  if (level >= 40) return '♥️ASTENADOR'
-  if (level >= 30) return '🥇 Caballero Dorado'
-  if (level >= 20) return '🥈 Caballero de Plata'
-  if (level >= 10) return '🥉 Caballero de Bronce'
-  if (level >= 5) return '🌱 Novato'
-  return '♥️ Aprendiz del camino'
+  if (level >= 70) return 'REY DEL CAMINO'
+  if (level >= 50) return 'JEFE DE GUARDIA'
+  if (level >= 40) return 'ASTENADOR'
+  if (level >= 30) return 'Caballero Dorado'
+  if (level >= 20) return 'Caballero de Plata'
+  if (level >= 10) return 'Caballero de Bronce'
+  if (level >= 5) return 'Novato'
+  return 'Aprendiz del camino'
 }
 
 let handler = async (m, { conn }) => {
@@ -28,7 +28,7 @@ let handler = async (m, { conn }) => {
   if (who === conn.user.jid) return m.react('✖️')
 
   if (!global.db.data.users[who]) {
-    return m.reply(`🩵 *Este usuario no está registrado.*`)
+    return m.reply(`🔥 *Este usuario no está registrado.*`)
   }
 
   let user = global.db.data.users[who]
@@ -41,11 +41,11 @@ let handler = async (m, { conn }) => {
 ╭━━━━━━━━━━━━━━━━━╮
 ┃𝗘𝗖𝗢𝗡𝗢𝗠𝗜𝗔 𝗗𝗘𝗟 𝗨𝗦𝗨𝗔𝗥𝗜𝗢: 
 ╰━─━─━─≪≪✠≫≫─━─━─━╯
-🩵𝖭𝗈𝗆𝖻𝗋𝖾: ${nombreParaMostrar}
-🩵𝖤𝗑𝗉: ${user.exp}
-🩵𝖭𝗂𝗏𝖾𝗅: ${user.level}
-🩵𝖱𝖺𝗇𝗀𝗈: ${rangoMagico}
-🩵𝖥𝖾𝖼𝗁𝖺: ${new Date().toLocaleString('es-ES')}
+🔥𝖭𝗈𝗆𝖻𝗋𝖾: ${nombreParaMostrar}
+✨𝖤𝗑𝗉: ${user.exp}
+🎁𝖭𝗂𝗏𝖾𝗅: ${user.level}
+⚡𝖱𝖺𝗇𝗀𝗈: ${rangoMagico}
+📆𝖥𝖾𝖼𝗁𝖺: ${new Date().toLocaleString('es-ES')}
 ╰━━━━━━━━━━━━━━━━━━
 > © Desarrollado por Félix 
 ╰━━━━━━━━━━━━━━━━━━`.trim()
@@ -58,7 +58,7 @@ let handler = async (m, { conn }) => {
     contextInfo: {
       isForwarded: true,
       forwardedNewsletterMessageInfo: {
-        newsletterJid: "120363418804796632@newsletter", // ID de tu canal
+        newsletterJid: "123456789@newletter", // ID de tu canal
         newsletterName: canalName,
         serverMessageId: -1,
       },
