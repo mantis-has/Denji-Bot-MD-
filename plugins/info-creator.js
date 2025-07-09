@@ -1,19 +1,19 @@
 let handler = async (m, { conn }) => {
-  // Reacciona con 💎
+  // Reacciona con 🔥
   if (conn.sendMessage) {
-    await conn.sendMessage(m.chat, { react: { text: '💎', key: m.key }});
+    await conn.sendMessage(m.chat, { react: { text: '🔥', key: m.key }});
   }
 
   // Datos de los contactos
-  let numberCreator = '18293142989' // Número de la creadora
-  let nombreCreator = '💎 C R E A D O R 💎'
-  let canal = 'https://wa.me18293142989'
+  let numberCreator = '50764735869' // Número de la creadora
+  let nombreCreator = '✰ 𝐏𝐫𝐨𝐩𝐢𝐞𝐭𝐚𝐫𝐢𝐨 ✰'
+  let canal = 'https://wa.me50764735869'
 
   let numberBot = '527222518356' // Número del bot
   let nombreBot = 'BOT OFICIAL'
 
-  let numberYoSoyYo = '521111111111'
-  let nombreYoSoyYo = 'Number'
+  let numberYoSoyYo = '18293142989'
+  let nombreYoSoyYo = '💎 C R E A D O R 💎'
 
   // vCards individuales
   let vcardCreator = `BEGIN:VCARD
@@ -38,7 +38,7 @@ TEL;waid=${numberYoSoyYo}:${numberYoSoyYo}
 END:VCARD`
 
   // Envía el canal como texto
-  await conn.sendMessage(m.chat, { text: `💙 AQUI ESTA EL NUMERO DE MI CREADOR Y MÁS CONTACTOS` }, { quoted: m })
+  await conn.sendMessage(m.chat, { text: `🔥 Aquí está el número de mi propietario y mi creador.` }, { quoted: m })
 
   // Envía la tarjeta de contacto con los tres contactos
   await conn.sendMessage(m.chat, {
