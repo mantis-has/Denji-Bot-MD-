@@ -1,4 +1,4 @@
 ```bash 
-MAKIMA ES MI BOT 
+MAKIMA ES MI BOT
 ```bash
-COPIAME
+Y
