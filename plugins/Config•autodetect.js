@@ -14,8 +14,8 @@ foto = `《✦》Se ha cambiado la imagen del grupo.\n\n> ✧ Acción hecha por:
 edit = `《✦》${usuario} Ha permitido que ${m.messageStubParameters[0] == 'on' ? 'solo admins' : 'todos'} puedan configurar el grupo.`
 newlink = `《✦》El enlace del grupo ha sido restablecido.\n\n> ✧ Acción hecha por:\n> » ${usuario}`
 status = `《✦》El grupo ha sido ${m.messageStubParameters[0] == 'on' ? '*cerrado*' : '*abierto*'} Por ${usuario}\n\n> ✧ Ahora ${m.messageStubParameters[0] == 'on' ? '*solo admins*' : '*todos*'} pueden enviar mensaje.`
-admingp = `「💎」 NUEVO ADMIN EN EL GRUPO.\n\nNombre: @${m.messageStubParameters[0].split`@`[0]}\n\nLe puso admin: ${usuario}`
-noadmingp =  `「💎」UN ADMIN MENOS EN EL GRUPO.\n\nNombre: @${m.messageStubParameters[0].split`@`[0]}\n\nLe quito admin: ${usuario}`
+admingp = `「💥」 NUEVO ADMIN EN EL GRUPO.\n\nNombre: @${m.messageStubParameters[0].split`@`[0]}\n\nLe puso admin: ${usuario}`
+noadmingp =  `「🔥」UN ADMIN MENOS EN EL GRUPO.\n\nNombre: @${m.messageStubParameters[0].split`@`[0]}\n\nLe quito admin: ${usuario}`
 aceptar = `✦ Ha llegado un nuevo participante al grupo.\n\n> ◦ ✐ Grupo: *${groupMetadata.subject}*\n\n> ◦ ⚘ Bienvenido/a: @${m.messageStubParameters[0].split('@')[0]}\n\n> ◦ ✧ Aceptado por: @${m.sender.split('@')[0]}` 
 
 if (chat.detect && m.messageStubType == 21) {
