@@ -13,15 +13,15 @@ let handler = async (m, { conn, args }) => {
   let totalCommands = Object.values(global.plugins).filter((v) => v.help && v.tags).length;  
 
   let images = [
-    'https://qu.ax/pJCKB.jpg',
-    'https://qu.ax/pJCKB.jpg',
-    'https://qu.ax/pJCKB.jpg',
-    'https://qu.ax/pJCKB.jpg'
+    'https://qu.ax/lRCWR.jpg',
+    'https://qu.ax/bXinP.jpg',
+    'https://qu.ax/lMRVV.jpg',
+    'https://qu.ax/UMbGb.jpg'
   ]
   let imgUrl = images[Math.floor(Math.random() * images.length)]  
 
   let txt = `
-¡𝐇𝐨𝐥𝐚! ${name} 𝐒𝐨𝐲 𝐌500-𝐔𝐥𝐭𝐫𝐚-𝐁𝐨𝐭 ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Sub-Bot)')}
+¡𝐇𝐨𝐥𝐚! ${name} 𝐒𝐨𝐲 *Denji* ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Sub-Bot)')}
 
 ╔━━ INFO-BOT ━━━━╗
 ┃Creador: Félix Manuel 
@@ -42,11 +42,11 @@ let handler = async (m, { conn, args }) => {
 
 
 ╭─⬣「 ✰𝐈𝐧𝐟𝐨✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #botreglas
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #comprarbot
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #uptime
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #menu
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #estado
+│⁖ฺ۟̇࣪·֗٬̤⃟🔥 #botreglas
+│⁖ฺ۟̇࣪·֗٬̤⃟🔥 #comprarbot
+│⁖ฺ۟̇࣪·֗٬̤⃟🔥 #uptime
+│⁖ฺ۟̇࣪·֗٬̤⃟🔥 #menu
+│⁖ฺ۟̇࣪·֗٬̤⃟🔥 #estado
 ╰─⬣
 
 ╭─⬣「 ✰𝐑𝐏𝐆✰ 」⬣
