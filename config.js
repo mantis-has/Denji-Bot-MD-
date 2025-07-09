@@ -48,16 +48,16 @@ global.makiJadibts = true
 //*─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─*
 
 global.packsticker = `─✰─ׄ─ׅ─ׄ─✰─ׄ─✰─ׄ✰─ׄ\nBot: M500 ULTRA\n\nCreador: Felix Manuel\n\nTipo: Público\n\nUsuarios: 10927\n─✰─ׄ─ׅ─ׄ─✰─ׄ─✰─ׄ✰─ׄ\n\n`
-global.packname = `⏤͟͞ू⃪  ̸̷͢𝐌500 𝐔𝐋𝐓𝐑𝐀 𝐁𝐎𝐓𑁯ᰍ`
-global.author = `Stickers M500 Ultra`;
+global.packname = `⏤͟͞ू⃪  ̸̷͢𝐃𝐞𝐧𝐣𝐢 𝐁𝐨𝐭𑁯ᰍ`
+global.author = `𝐒𝐭𝐢𝐜𝐤𝐞𝐫𝐬 𝐁𝐲 𝐅𝐞́𝐥𝐢𝐱`;
 global.wm = '⏤͟͞ू⃪  ̸̷͢𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 Félix Manuel';
-global.titulowm = '⏤͟͞ू⃪M500 2.0 𝐁𖹭t͟𑁯ᰍ';
+global.titulowm = '⏤͟͞ू⃪𝐃𝐞𝐧𝐣𝐢 𝐁𖹭t͟ 𝐁𝐨𝐭𑁯ᰍ';
 global.igfg = '𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪'
-global.botname = 'M500 2.0 Ultra Bot'
+global.botname = '𝐃𝐞𝐧𝐣𝐢 𝐁𝐨𝐭 𝐌𝐃'
 global.dev = '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ Félix Manuel'
-global.textbot = 'M500V2 : Félix Manuel'
-global.gt = '͟͞M500';
-global.namechannel = '𝐌500 𝐂𝐡a͟𝐧n͟e͟𝐥𑁯'
+global.textbot = '𝐃𝐞𝐧𝐣𝐢 : Félix Manuel'
+global.gt = '͟͞𝐃𝐞𝐧𝐣𝐢';
+global.namechannel = '𝐃𝐞𝐧𝐣𝐢 𝐂𝐡a͟𝐧n͟e͟𝐥𑁯'
 
 //*─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─*
 
@@ -79,7 +79,7 @@ global.cn ='https://whatsapp.com/channel/0029VbAZcyIIXnlwp79iwu2l';
 global.catalogo = fs.readFileSync('./src/catalogo.jpg');
 global.estilo = { key: {  fromMe: false, participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "5219992095479-1625305606@g.us" } : {}) }, message: { orderMessage: { itemCount : -999999, status: 1, surface : 1, message: packname, orderTitle: 'Bang', thumbnail: catalogo, sellerJid: '0@s.whatsapp.net'}}}
 global.ch = {
-ch1: '120363400360651198@newsletter',
+ch1: '120363402362088282@newsletter',
 }
 global.multiplier = 70
 
