@@ -1,3 +1,7 @@
+//* Código Creado por Félix*
+//*No quites Los Créditos*
+
+
 const handler = async (m, { isOwner, isAdmin, conn, participants, args, usedPrefix }) => {
   if (usedPrefix == 'a' || usedPrefix == 'A') return;
   if (!(isAdmin || isOwner)) {
@@ -7,19 +11,19 @@ const handler = async (m, { isOwner, isAdmin, conn, participants, args, usedPref
 
   const pesan = args.join(' ');
   const invocador = m.pushName || 'Administrador';
-  const pp = 'https://qu.ax/pJCKB.jpg'; // FOTO que me diste
+  const pp = 'https://qu.ax/lRCWR.jpg'; // FOTO que me diste
 
   let teks = `╭─╮︹︹⊹︹︹⊹︹︹⊹︹︹╭─╮
   𝗜𝗡𝗩𝗢𝗖𝗔𝗡𝗗𝗢 𝗚𝗥𝗨𝗣𝗢
 ╚▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬▭╝
 
-💎 Te invocó: ${invocador}
+🔥 Te invocó: ${invocador}
 
-💎 Mensaje: ${pesan ? pesan : ''}
+💥 Mensaje: ${pesan ? pesan : ''}
 
 ╭─⬣「 ✰𝗠𝗶𝗲𝗺𝗯𝗿𝗼𝘀✰ 」⬣\n`;
   for (const mem of participants) {
-    teks += `│⁖ฺ۟̇࣪·֗٬̤⃟🩵 @${mem.id.split('@')[0]}\n`;
+    teks += `│⁖ฺ۟̇࣪·֗٬̤⃟🥷 @${mem.id.split('@')[0]}\n`;
   }
   teks += '╰─⬣';
 
