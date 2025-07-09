@@ -43,8 +43,8 @@ let handler = async (m, { conn }) => {
       },
       externalAdReply: {
         title: channelRD.name,
-        body: '𝐌500 𝐔𝐋𝐓𝐑𝐀 𝐁𝐎𝐓',
-        thumbnailUrl: 'https://files.catbox.moe/szodpq.jpg', // Cambia la imagen si deseas
+        body: '⁖ฺ۟̇࣪·֗٬̤⃟🔥𝐃𝐞𝐧𝐣𝐢 ✰ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 ⬣',
+        thumbnailUrl: 'https://qu.ax/UMbGb.jpg', // Cambia la imagen si deseas
         mediaType: 1,
         renderLargerThumbnail: true,
         sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
