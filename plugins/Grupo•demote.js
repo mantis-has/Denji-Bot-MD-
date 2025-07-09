@@ -8,8 +8,8 @@ var number = text.split`@`[1]
 var number = text
 }
 
-if (!text && !m.quoted) return conn.reply(m.chat, `🩵 *Debes mensionar al usuario  para usar este comando.*`, m, rcanal)
-if (number.length > 13 || (number.length < 11 && number.length > 0)) return conn.reply(m.chat, `💎 *Debes mensionar a un usuario.*`, m, fake)
+if (!text && !m.quoted) return conn.reply(m.chat, `🔥 Debes mensionar al usuario  para usar este comando.`, m, rcanal)
+if (number.length > 13 || (number.length < 11 && number.length > 0)) return conn.reply(m.chat, `🔥 Debes mensionar a un usuario.`, m, fake)
 
 try {
 if (text) {
