@@ -1,9 +1,1 @@
------------
-
-***WELCOME  A BLACK-CLOVER PLUGINS LIST PAWER BY THE CARLOS***
-
------------
-
-***EL MEJOR BOT DE WHATSAPP ⚔️***
-
-----------
+</q>"𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐓𝐨 𝐃𝐞𝐧𝐣𝐢 𝐁𝐨𝐭"</b>
