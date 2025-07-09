@@ -3,13 +3,13 @@ let handler = async function (m, { conn }) {
   
   if (!user.registered) {
     return m.reply(`
-🩵 *ERROR*
+🔥 *ERROR*
 `)
   }
 
   user.registered = false
   m.reply(`
-「🩵」 *Registro eliminado.*
+「🔥」 *Registro eliminado.*
 
 《✧》Ya no podrás usar mis comandos.
 `)
@@ -33,8 +33,8 @@ let handler = async function (m, { conn }) {
       forwardingScore: 999,
       externalAdReply: {
         title: channelRD.name,
-        body: 'MAKIMA - FRASES',
-        thumbnailUrl: 'https://qu.ax/wXgkR.jpg', // Opcional, cámbiala si quieres
+        body: '🔥 Frases y más 🔥',
+        thumbnailUrl: 'https://qu.ax/UMbGb.jpg', // Opcional, cámbiala si quieres
         mediaType: 1,
         renderLargerThumbnail: true,
       }
