@@ -533,7 +533,7 @@ const msg = {
   premium: '「🔥」 Este comando solo puede ser usado por users premiums.',
   private: '「💥」 Este comando solo puede ser usado en chats privados.',
   admin: '「🔥」 Este comando solo puede ser usado por admins.',
-  botAdmin: '「💥」 La bot debe ser admin.',
+  botAdmin: '「💥」 El bot debe ser admin.',
   unreg: '「🔥」 Necesitas registrarte para usar mis comandos disponibles.\n\n#Reg nombre.edad\n\nEjemplo: #reg Makima.25',
   restrict: '「💥」 𝙴𝚜te Comando fue desactivado por mi creador.'
 }[type];
