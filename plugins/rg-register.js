@@ -63,7 +63,7 @@ let handler = async function (m, { conn, text, args, usedPrefix, command }) {
         contextInfo: {
             externalAdReply: {
                 title: '⊱『𝗡𝗨𝗘𝗩𝗢 𝗥𝗘𝗚𝗜𝗦𝗧𝗥𝗢』⊰',
-                thumbnailUrl: 'https://qu.ax/pJCKB.jpg',
+                thumbnailUrl: 'https://qu.ax/UMbGb.jpg',
                 mediaType: 1,
                 renderLargerThumbnail: true
             }
