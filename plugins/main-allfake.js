@@ -31,15 +31,15 @@ console.log(`Error : ${e}`)
 global.creador = 'Wa.me/18293142989'
 global.ofcbot = `${conn.user.jid.split('@')[0]}`
 global.asistencia = 'Wa.me/18293142989'
-global.namechannel = '⏤͟͞ू⃪💎𓏲𝐌500𓍲̈͜𝗨̴ᥣ̥𝗍̈rᥲ̄𓊓̵̬Channel⋆͙̈么͟͞──'
-global.namegrupo = '⏤͟͞ू⃪  ̸̷͢𝐌500 ☦︎ 𝐆𝐫𝐮𝐩𝐨𑁯ᰍ'
+global.namechannel = '⏤͟͞ू⃪🔥𝐃𝐞𝐧𝐣𝐢 𝐂𝐡𝐚𝐧𝐧𝐞𝐥'
+global.namegrupo = '⏤͟͞ू⃪  ̸̷͢🔥𝐃𝐞𝐧𝐣𝐢 ☦︎ 𝐆𝐫𝐮𝐩𝐨𑁯ᰍ'
 global.namecomu = 'Deymoon Club'
-global.listo = '🩵 *Aquí tienes ᕕ( ᐛ )ᕗ*'
+global.listo = '💥 *Aquí tienes ᕕ( ᐛ )ᕗ*'
 
 //Ids channel
-global.idchannel = '120363400360651198@newsletter'
-global.canalIdM = ["120363400360651198@newsletter", "120363418804796632@newsletter"]
-global.canalNombreM = ["⏤͟͞ू⃪  ̸̷͢𝐌𝐚𝐤𝐢𝐦𝐚 ☦︎ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥𑁯ᰍ", "🩵̶۫̄͟Ⓜ︎𓏲𝐌500𓍲̈͜𝗨̴ᥣ̥𝗍̈rᥲ̄𓊓̵̬𝐂h҉a҉n҉n̸e҉l҉⋆͙̈么͟͞──"]
+global.idchannel = '120363402362088282@newsletter'
+global.canalIdM = ["120363402362088282@newsletter", "120363402362088282@newsletter"]
+global.canalNombreM = ["⏤͟͞ू⃪🔥𝐃𝐞𝐧𝐣𝐢 𝐂𝐡𝐚𝐧𝐧𝐞𝐥𑁯ᰍ", "⏤͟͞ू⃪🔥𝐃𝐞𝐧𝐣𝐢 𝐂𝐡𝐚𝐧𝐧𝐞𝐥"]
 global.channelRD = await getRandomChannel()
 
 global.d = new Date(new Date + 3600000)
@@ -56,16 +56,16 @@ global.done = '✅'
 global.error = '❌'
 
 //Emojis determinado de MakimaBot 
-global.emoji = '🩵'
-global.emoji2 = '💎'
-global.emoji3 = '🩵'
-global.emoji4 = '💎'
+global.emoji = '💥'
+global.emoji2 = '🔥'
+global.emoji3 = '🔥'
+global.emoji4 = '💥'
 global.emojis = [emoji, emoji2, emoji3, emoji4].getRandom()
 
 
 //Enlaces
-var canal = 'https://whatsapp.com/channel/0029VbAZcyIIXnlwp79iwu2l'  
-let canal2 = 'https://whatsapp.com/channel/0029VbAa5sNCsU9Hlzsn651S'
+var canal = 'https://whatsapp.com/channel/0029Vb5nxWWFHWq5CNFP5b21'  
+let canal2 = 'https://whatsapp.com/channel/0029Vb5nxWWFHWq5CNFP5b21'
 var git = 'https://github.com/mantis-has' 
 var youtube = '' 
 var github = 'https://github.com/mantis-has/Makima' 
