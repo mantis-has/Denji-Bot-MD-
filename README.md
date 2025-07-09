@@ -1,4 +1,7 @@
-```bash 
-MAKIMA ES MI BOT
-```bash
-Y
+## 𝐃𝐞𝐧𝐣𝐢 𝐁𝐨𝐭 𝐌𝐃
+
+</details>
+
+---
+
+EN PROCESO...
