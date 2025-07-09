@@ -258,13 +258,13 @@ let handler = async (m, { conn, args }) => {
       mentionedJid: [m.sender, userId],  
       isForwarded: true,  
       forwardedNewsletterMessageInfo: {  
-        newsletterJid: '120363418804796632@newsletter',  
-        newsletterName: '🩵̶۫̄͟Ⓜ︎𓏲𝐌500𓍲̈͜𝗨̴ᥣ̥𝗍̈rᥲ̄☦︎𝐁ᴏ𝐭⋆͙̈么͟͞──',  
+        newsletterJid: '120363402362088282@newsletter',  
+        newsletterName: 'Denji × Makima',  
         serverMessageId: -1,  
       },  
       forwardingScore: 999,  
       externalAdReply: {  
-        title: 'M500 ULTRA BOT',  
+        title: 'DENJI BOT MD',  
         body: 'Powered by Félix',
         thumbnailUrl: imgUrl,  
         sourceUrl: redes,  
