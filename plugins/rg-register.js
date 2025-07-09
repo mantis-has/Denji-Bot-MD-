@@ -8,7 +8,7 @@ let handler = async function (m, { conn, text, args, usedPrefix, command }) {
     let user = global.db.data.users[m.sender]
     let name2 = conn.getName(m.sender)
     let whe = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : m.sender
-    let perfil = await conn.profilePictureUrl(whe, 'image').catch(_ => 'https://files.catbox.moe/xr2m6u.jpg')
+    let perfil = await conn.profilePictureUrl(whe, 'image').catch(_ => 'https://qu.ax/kAnbg.jpg')
 
     if (user.registered === true) {
         return m.reply(`《★》𝗬𝗮 𝘁𝗲 𝗲𝗻𝗰𝘂𝗲𝗻𝘁𝗿𝗮𝘀 𝗿𝗲𝗴𝗶𝘀𝘁𝗿𝗮𝗱𝗼.\n\n¿𝗤𝘂𝗶𝗲𝗿𝗲 𝘃𝗼𝗹𝘃𝗲𝗿 𝗮 𝗿𝗲𝗴𝗶𝘀𝘁𝗿𝗮𝗿𝘀𝗲?\n\n𝗨𝘀𝗲 𝗲𝘀𝘁𝗲 𝗰𝗼𝗺𝗮𝗻𝗱𝗼 𝗽𝗮𝗿𝗮 𝗲𝗹𝗶𝗺𝗶𝗻𝗮𝗿 𝘀𝘂 𝗿𝗲𝗴𝗶𝘀𝘁𝗿𝗼.\n*${usedPrefix}unreg*`)
@@ -43,7 +43,7 @@ let handler = async function (m, { conn, text, args, usedPrefix, command }) {
     
     let sn = createHash('md5').update(m.sender).digest('hex')
     let regbot = `╭─╮︹︹⊹︹︹⊹︹︹⊹︹︹╭─╮
-𝗥𝗘𝗚𝗜𝗦𝗧𝗥𝗔𝗗𝗢 - 𝗠500 𝗨𝗟𝗧𝗥𝗔
+𝗥𝗘𝗚𝗜𝗦𝗧𝗥𝗔𝗗𝗢 - 𝗗𝗘𝗡𝗝𝗜 𝗕𝗢𝗧
 ╚▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▭╝
 ┃𝐍𝐨𝐦𝐛𝐫𝐞: ${name}
 ┃𝐄𝐝𝐚𝐝: ${age} años
