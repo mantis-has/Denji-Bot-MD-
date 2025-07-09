@@ -58,7 +58,7 @@ ${listaBotsGrupo}
     },
     externalAdReply: {
       title: channelRD.name,
-      body: 'MAKIMA 2.0 BOT',
+      body: '╭─⬣「 ✰BOTS ACTIVOS✰ 」⬣',
       thumbnailUrl: thumbnailUrl,
       mediaType: 1,
       renderLargerThumbnail: false,
