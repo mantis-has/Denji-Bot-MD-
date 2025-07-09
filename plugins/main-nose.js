@@ -6,7 +6,7 @@ const channelRD = {
   id: "120363400360651198@newsletter", // Cambia por tu canal si quieres
   name: "💎 Frases y más 💎"
 }
-const thumbnailUrl = 'https://files.catbox.moe/szodpq.jpg' // Imagen cuadrada y pequeña
+const thumbnailUrl = 'https://qu.ax/qhrrA.jpg' // Imagen cuadrada y pequeña
 
 let handler = async function (m, { args, command, usedPrefix, conn }) {
   if (!args[0]) {
@@ -25,7 +25,7 @@ let handler = async function (m, { args, command, usedPrefix, conn }) {
       },
       externalAdReply: {
         title: channelRD.name,
-        body: '𝐌500 𝐔𝐋𝐓𝐑𝐀 𝐁𝐎𝐓',
+        body: '𝐃𝐄𝐍𝐉𝐈 𝐁𝐎𝐓 𝐌𝐃',
         thumbnailUrl: thumbnailUrl,
         mediaType: 1,
         renderLargerThumbnail: false,
