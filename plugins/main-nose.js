@@ -35,7 +35,7 @@ let handler = async function (m, { args, command, usedPrefix, conn }) {
     await conn.sendMessage(
       m.chat,
       {
-        text: '「💎」Debes ingresar un texto para usar este comando.',
+        text: '「🔥」Debes ingresar un texto para usar este comando.',
         contextInfo: contextNewsletter
       },
       { quoted: m }
@@ -47,7 +47,7 @@ let handler = async function (m, { args, command, usedPrefix, conn }) {
   // Mensaje citado
   const quotedMsg = {
     key: { fromMe: false, participant: "0@s.whatsapp.net", remoteJid: m.chat, id: Math.random().toString(36).slice(2) },
-    message: { conversation: '𝐌500 𝐔𝐋𝐓𝐑𝐀 𝐁𝐎𝐓' }
+    message: { conversation: 'Denji 𝐁𝐎𝐓' }
   };
   await conn.sendMessage(m.chat, { text }, { quoted: quotedMsg });
 };
