@@ -11,13 +11,13 @@ export async function before(m, { isAdmin, isBotAdmin, conn }) {
 
   if (!chat.antiLink || !m.text || !isGroupLink) return !0
   if (isAdmin && m.text.includes(grupo)) {
-    return conn.reply(m.chat, `🩵 *Enlace detect, eres admin, seras perdonado.*`, m)
+    return conn.reply(m.chat, `💥 *Enlace detect, eres admin, seras perdonado.*`, m)
   }
 
   if (!isAdmin) {
     // Si el bot no es admin
     if (!isBotAdmin) {
-      return conn.reply(m.chat, `🩵 *No puedo eliminar a la persona porque no soy admin en el grupo...*`, m)
+      return conn.reply(m.chat, `🔥 *No puedo eliminar a la persona porque no soy admin en el grupo...*`, m)
     }
 
     // Evita expulsar por link del mismo grupo
@@ -27,7 +27,7 @@ export async function before(m, { isAdmin, isBotAdmin, conn }) {
     // Acción anti-link
     await conn.reply(
       m.chat,
-      `📎 *¡ANTI LINK AVTIBADO!*\n\n🩵 *${await conn.getName(m.sender)}* ha compartido un enlace en el grupo.\n\n*seras eliminado...*`,
+      `📎 *¡ANTI LINK AVTIVADO!*\n\n💥 *${await conn.getName(m.sender)}* ha compartido un enlace en el grupo.\n\n*seras eliminado...*`,
       m
     )
 
@@ -49,7 +49,7 @@ export async function before(m, { isAdmin, isBotAdmin, conn }) {
         return conn.reply(m.chat, `🚫 *Error al intentar eliminar: ${e}*`, m)
       }
     } else {
-      return conn.reply(m.chat, `🩵 *Restricción desactivada por mi creadora, no puedo expulsar.*`, m)
+      return conn.reply(m.chat, `💥 *Restricción desactivada por mi creadora, no puedo expulsar.*`, m)
     }
   }
 
