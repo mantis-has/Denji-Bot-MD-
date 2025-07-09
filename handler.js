@@ -415,11 +415,11 @@ m.isCommand = true
 let xp = 'exp' in plugin ? parseInt(plugin.exp) : 10
 m.exp += xp
 if (!isPrems && plugin.coin && global.db.data.users[m.sender].coin < plugin.coin * 1) {
-conn.reply(m.chat, `「🩵」 Se agotaron tus ${moneda}`, m)
+conn.reply(m.chat, `「🔥」 Se agotaron tus ${moneda}`, m)
 continue
 }
 if (plugin.level > _user.level) {
-conn.reply(m.chat, `「🩵」 Se requiere el nivel: *${plugin.level}*\n\n• Tu nivel actual es: *${_user.level}*\n\n• Usa este comando para subir de nivel:\n*${usedPrefix}levelup*`, m)
+conn.reply(m.chat, `「💥」 Se requiere el nivel: *${plugin.level}*\n\n• Tu nivel actual es: *${_user.level}*\n\n• Usa este comando para subir de nivel:\n*${usedPrefix}levelup*`, m)
 continue
 }
 let extra = {
@@ -528,13 +528,13 @@ if (opts['autoread']) await this.readMessages([m.key])
 
 global.dfail = (type, m, conn) => {
 const msg = {
-  rowner: '「🩵」Este comando solo puede ser usado por mi creador.',
-  owner:  '「🩵」 Este comando solo puede ser usado por mi creador.',
-  premium: '「🩵」 Este comando solo puede ser usado por users premiums.',
-  private: '「🩵」 Este comando solo puede ser usado en chats privados.',
-  admin: '「🩵」 Este comando solo puede ser usado por admins.',
-  botAdmin: '「🩵」 La bot debe ser admin.',
-  unreg: '「🩵」 Necesitas registrarte para usar mis comandos disponibles.\n\n#Reg nombre.edad\n\nEjemplo: #reg Makima.25',
-  restrict: '「🩵」 𝙴𝚜te Comando fue desactivado por mi creador.'
+  rowner: '「🔥」Este comando solo puede ser usado por mi creador.',
+  owner:  '「💥」 Este comando solo puede ser usado por mi creador.',
+  premium: '「🔥」 Este comando solo puede ser usado por users premiums.',
+  private: '「💥」 Este comando solo puede ser usado en chats privados.',
+  admin: '「🔥」 Este comando solo puede ser usado por admins.',
+  botAdmin: '「💥」 La bot debe ser admin.',
+  unreg: '「🔥」 Necesitas registrarte para usar mis comandos disponibles.\n\n#Reg nombre.edad\n\nEjemplo: #reg Makima.25',
+  restrict: '「💥」 𝙴𝚜te Comando fue desactivado por mi creador.'
 }[type];
 if (msg) return conn.reply(m.chat, msg, m, rcanal).then(_ => m.react('✖️'))}
