@@ -22,7 +22,7 @@ ${usedPrefix + command} modoadmin
 ${usedPrefix + command} antifake
 ${usedPrefix + command} antibot
 
-💎 CONFIGURACIÓN PARA MI CREADOR 
+🔥 CONFIGURACIÓN PARA MI CREADOR 💥
 
 ${usedPrefix + command} antisubots
 ${usedPrefix + command} public
