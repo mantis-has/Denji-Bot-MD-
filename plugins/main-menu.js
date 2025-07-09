@@ -24,7 +24,7 @@ let handler = async (m, { conn, args }) => {
 ¡𝐇𝐨𝐥𝐚! ${name} 𝐒𝐨𝐲 *Denji* ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Sub-Bot)')}
 
 ╔━━ INFO-BOT ━━━━╗
-┃Creador: Félix Manuel 
+┃Creador: 𝙃𝙖𝙧𝙤𝙡𝙙 𝙍𝙃𝙇𝙈+𝟱𝟳
 ┃Tiempo activo: ${uptime}
 ┃Comandos: ${totalCommands}
 ┃Registros: ${totalreg}
@@ -246,7 +246,7 @@ let handler = async (m, { conn, args }) => {
 │⁖ฺ۟̇࣪·֗٬̤⃟💎 #broadcast
 ╰─⬣
 
-> © Desarrollado por Félix Manuel.
+> © Propietario 𝙃𝙖𝙧𝙤𝙡𝙙 𝙍𝙃𝙇𝙈+𝟱𝟳
 `.trim();
 
   let imgBuffer = await fetch(imgUrl).then(res => res.buffer());  
