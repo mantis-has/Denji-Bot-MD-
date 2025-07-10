@@ -50,14 +50,13 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   if (m.messageStubType == 27) {
     const bienvenida = `
-╭─⬣「 ✰BIENVENIO✰ 」⬣
-┃
-┃🔥 Usuario: ${user}
-┃🔥 Grupo: ${groupMetadata.subject}
-┃🔥 Miembros: ${total}
-┃
-┃⌬ Usa *#help* para ver los comandos disponibles.
-╚━━━━━━━━━━━━━━━╝
+🎉 ¡Bienvenido/a ${user} al grupo ${groupMetadata.subject}! 🎉
+
+Estamos súper emocionados de tenerte aquí con nosotros. 🎈✨ Prepárate para compartir risas, aprender y disfrutar de grandes momentos juntos. 💥💖
+
+No dudes en presentarte y contarnos un poco sobre ti. ¡Vamos a hacer que esto sea increíble! 🚀😄
+
+¡Bienvenido/a ${user} a la familia! que ahora somos ${total} Miembros🥳🎊
 `
     // Mensaje de bienvenida como newsletter
     await conn.sendMessage(m.chat, { 
