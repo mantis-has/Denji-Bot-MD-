@@ -5,9 +5,9 @@ let handler = async (m, { conn }) => {
   }
 
   // Datos de los contactos
-  let numberCreator = '50764735869' // Número de la creadora
+  let numberCreator = '18293142989' // Número del creador
   let nombreCreator = '✰ 𝐏𝐫𝐨𝐩𝐢𝐞𝐭𝐚𝐫𝐢𝐨 ✰'
-  let canal = 'https://wa.me50764735869'
+  let canal = 'https://wa.me/18393142989'
 
   let numberBot = '527222518356' // Número del bot
   let nombreBot = 'BOT OFICIAL'
