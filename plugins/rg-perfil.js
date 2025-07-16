@@ -47,13 +47,13 @@ var handler = async (m, { conn }) => {
 
   await m.reply(animacion)
 
-  // 🩵 Usuarios normales
+  // 🔥 Usuarios normales
   let noprem = `
 『 PERFIL DEL USUARIO 』
 
-🩵 *usuario:* ${username}
-🩵 *tag:* @${who.replace(/@.+/, '')}
-🩵 *Registrado:* ${registered ? '✅ Activado' : '❌ No'}
+🔥 *usuario:* ${username}
+💥 *tag:* @${who.replace(/@.+/, '')}
+🔥 *Registrado:* ${registered ? '✅ Activado' : '❌ No'}
 
 ╭━━━━━━━━━━━━━╮
 ┃💎 *Nivel:* ${level}
@@ -65,18 +65,18 @@ var handler = async (m, { conn }) => {
 
   // 🔥 Usuarios Premium
   let prem = `
-🩵〘 𝐔𝐒𝐔𝐀𝐑𝐈𝐎 𝐏𝐑𝐄𝐌𝐈𝐔𝐌 〙🩵
+〘 𝐔𝐒𝐔𝐀𝐑𝐈𝐎 𝐏𝐑𝐄𝐌𝐈𝐔𝐌 〙
 
 ERES RECONOCIDO EN DENJI』
 
-🩵 *Usuario:* ${username}
-🩵 *tag:* @${who.replace(/@.+/, '')}
-🩵 *Registrado:* ${registered ? '✅' : '❌'}
+🔥 *Usuario:* ${username}
+💥 *tag:* @${who.replace(/@.+/, '')}
+2 *Registrado:* ${registered ? '✅' : '❌'}
 
 ╭━━━━━━━━━━━━━╮
-┃💎 *Nivel:* ${level}
-┃💎 *Experiencia:* ${exp}
-┃💎 *Rango:* ${role}
+┃🔥 *Nivel:* ${level}
+┃💥 *Experiencia:* ${exp}
+┃🔥 *Rango:* ${role}
 ╰━━━━━━━━━━━━━
 > © powered by Félix Manuel 
 `.trim()
