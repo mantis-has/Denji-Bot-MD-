@@ -6,13 +6,13 @@ import { xpRange } from '../lib/levelling.js';
 import { promises } from 'fs';
 import { join } from 'path';
 
-// Creamos un objeto global para almacenar el banner y el nombre por sesión
+// Objeto global para almacenar el banner y el nombre por sesión
 global.bannerUrls = {}; // Almacenará las URLs de los banners por sesión
 global.botNames = {};   // Almacenará los nombres personalizados por sesión
 
 let handler = async (m, { conn, usedPrefix, text, command }) => {
   try {
-    // Inicializamos el banner y el nombre por sesión si no existen
+    // Inicialización del banner y el nombre por sesión si no existen
     if (!global.bannerUrls[conn.user.jid]) {
       global.bannerUrls[conn.user.jid] = 'https://qu.ax/ifPGY.jpg'; // URL inicial de la imagen del menú
     }
@@ -52,9 +52,9 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
       // Variables para el contexto del canal
       const dev = 'Félix Manuel';
       const redes = 'https://github.com/Andresv27728/2.0';
-      const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" };
+      const channelRD = { id: "120363402362088282@newsletter", name: "━━━───✰──━━━─" };
       let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
-      let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/mqtxvp.jpg');
+      let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://qu.ax/ifPGY.jpg');
 
       // Mensaje de "CARGANDO COMANDOS..." con contexto de canal y respondiendo al mensaje
       await conn.sendMessage(m.chat, {
