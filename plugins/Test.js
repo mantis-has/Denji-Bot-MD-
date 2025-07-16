@@ -1,88 +1,60 @@
-/*
-• @David-Chian
-- https://github.com/David-Chian
-*/
+import axios from 'axios';
+import { pinterest } from '../lib/scraper.js';
 
-import fetch from 'node-fetch';
-import baileys from '@whiskeysockets/baileys';
+let handler = async (m, { conn, usedPrefix, command, text }) => {
+if (!text) throw `*⚠️ ${await tr("Ingresa el término de búsqueda.")}*\n${await tr("Ejemplo")}: ${usedPrefix + command} nayeon`;
+m.react("⌛");
+try {
+const downloadAttempts = [async () => {
+const response = await pinterest.search(text, 6);
+const pins = response.result.pins.slice(0, 6);
+return pins.map(pin => ({title: pin.title || text,
+description: `🔎 Por: ${pin.uploader.username}`,
+image: pin.media.images.orig.url}));
+},
+async () => {
+const res = await axios.get(`https://api.siputzx.my.id/api/s/pinterest?query=${encodeURIComponent(text)}`);
+const data = res.data.data.slice(0, 6);
+return data.map(result => ({title: result.grid_title || text, description: '', image: result.images_url }));
+},
+async () => {
+const res = await axios.get(`https://api.dorratz.com/v2/pinterest?q=${text}`);
+const data = res.data.slice(0, 6);
+return data.map(result => ({title: result.fullname || text, description: `*🔸️${tr("Autor")}:* ${result.upload_by}\n*🔸️ ${tr("Seguidores")}:* ${result.followers}`, image: result.image }));
+},
+async () => {
+const res = await axios.get(`${apis}/search/pinterestv2?text=${encodeURIComponent(text)}`);
+const data = res.data.data.slice(0, 6);
+return data.map(result => ({title: result.description || text, description: `🔎 ${tr("Autor")}: ${result.name} (@${result.username})`, image: result.image }));
+}];
 
-async function sendAlbumMessage(jid, medias, options = {}) {
-    if (typeof jid !== "string") throw new TypeError(`jid must be string, received: ${jid}`);
-    if (medias.length < 2) throw new RangeError("Se necesitan al menos 2 imágenes para un álbum");
+let results = null;
+for (const attempt of downloadAttempts) {
+try {
+results = await attempt();
+if (results && results.length > 0) break; 
+} catch (err) {
+console.error(`Error in attempt: ${err.message}`);
+continue; // Si falla, intentar con la siguiente API
+}}
 
-    const caption = options.text || options.caption || "";
-    const delay = !isNaN(options.delay) ? options.delay : 500;
-    delete options.text;
-    delete options.caption;
-    delete options.delay;
-
-    const album = baileys.generateWAMessageFromContent(
-        jid,
-        { messageContextInfo: {}, albumMessage: { expectedImageCount: medias.length } },
-        {}
-    );
-
-    await conn.relayMessage(album.key.remoteJid, album.message, { messageId: album.key.id });
-
-    for (let i = 0; i < medias.length; i++) {
-        const { type, data } = medias[i];
-        const img = await baileys.generateWAMessage(
-            album.key.remoteJid,
-            { [type]: data, ...(i === 0 ? { caption } : {}) },
-            { upload: conn.waUploadToServer }
-        );
-        img.message.messageContextInfo = {
-            messageAssociation: { associationType: 1, parentMessageKey: album.key },
-        };
-        await conn.relayMessage(img.key.remoteJid, img.message, { messageId: img.key.id });
-        await baileys.delay(delay);
-    }
-    return album;
+if (!results || results.length === 0) throw new Error(`❌ ${await tr("No se encontraron resultados para")} "${text}".`);
+if (m.isWABusiness) {
+const medias = results.map(result => ({ type: "image", data: { url: result.image } }));
+await conn.sendAlbumMessage(m.chat, medias, `✅ ${await tr("Resultados para:")} ${text}`, m);
+} else {
+const messages = results.map(result => ["", `${result.title}\n${result.description}`, result.image]);
+await conn.sendCarousel(m.chat, `✅ ${await tr("Resultados para:")} ${text}`, "🔍 Pinterest Search", messages, m);
 }
+m.react("✅️");
+} catch (e) {
+await m.reply(e.message || `❌ ${await tr("No se encontraron resultados para")} "${text}".`);
+m.react("❌️");
+}};
+handler.help = ['pinterest <keyword>'];
+handler.tags = ['buscadores'];
+handler.command = /^(pinterest)$/i;
+handler.register = true;
+handler.limit = 1;
 
-const pinterest = async (m, { conn, text, usedPrefix, command }) => {
-    if (!text) return conn.reply(m.chat, `*💎 Formato incorrecto. Uso Correcto: ${usedPrefix + command} M500 ULTRA BOT*`, m);
-
-    await m.react('🕐');
-    conn.reply(m.chat, '💎 *Descargando imágenes de Pinterest...*', m, {
-        contextInfo: {
-            externalAdReply: {
-                mediaUrl: null,
-                mediaType: 1,
-                showAdAttribution: true,
-                title: packname,
-                body: wm,
-                previewType: 0,
-                thumbnail: icons,
-                sourceUrl: channel
-            }
-        }
-    });
-
-    try {
-        const res = await fetch(`https://api.dorratz.com/v2/pinterest?q=${encodeURIComponent(text)}`);
-        const data = await res.json();
-
-        if (!Array.isArray(data) || data.length < 2) {
-            return conn.reply(m.chat, '❌ No se encontraron suficientes imágenes para un álbum.', m);
-        }
-
-        const images = data.slice(0, 10).map(img => ({ type: "image", data: { url: img.image_large_url } }));
-
-        const caption = `💎 𝗥𝗲𝘀𝘂𝗹𝘁𝗮𝗱𝗼𝘀 𝗱𝗲: ${text}`;
-        await sendAlbumMessage(m.chat, images, { caption, quoted: m });
-
-        await m.react('✅');
-    } catch (error) {
-        console.error(error);
-        await m.react('❌');
-        conn.reply(m.chat, '⚠️ Hubo un error al obtener las imágenes de Pinterest.', m);
-    }
-};
-
-pinterest.help = ['pinterest <query>'];
-pinterest.tags = ['buscador', 'descargas'];
-pinterest.command = /^(pinterest|pin)$/i;
-pinterest.register = true;
-
-export default pinterest;
+export default handler;
