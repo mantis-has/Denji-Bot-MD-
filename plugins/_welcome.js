@@ -1,97 +1,112 @@
-import { WAMessageStubType } from '@whiskeysockets/baileys'
-import fetch from 'node-fetch'
+//© código creado por Deylin 
+//https://github.com/deylinqff
+//➤  no quites creditos 
 
-const channelRD = {
-  id: "120363402362088282@newsletter", // Cambia por tu canal si quieres
-  name: "⁖ฺ۟̇࣪·֗٬̤⃟🔥𝐃𝐞𝐧𝐣𝐢 ✰ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 ⬣"
+import { WAMessageStubType } from '@whiskeysockets/baileys'
+
+const paises = {
+  "1": "🇺🇸 Estados Unidos",
+  "34": "🇪🇸 España",
+  "52": "🇲🇽 México",
+  "54": "🇦🇷 Argentina",
+  "55": "🇧🇷 Brasil",
+  "56": "🇨🇱 Chile",
+  "57": "🇨🇴 Colombia",
+  "58": "🇻🇪 Venezuela",
+  "591": "🇧🇴 Bolivia",
+  "593": "🇪🇨 Ecuador",
+  "595": "🇵🇾 Paraguay",
+  "598": "🇺🇾 Uruguay",
+  "502": "🇬🇹 Guatemala",
+  "503": "🇸🇻 El Salvador",
+  "504": "🇭🇳 Honduras",
+  "505": "🇳🇮 Nicaragua",
+  "506": "🇨🇷 Costa Rica",
+  "507": "🇵🇦 Panamá",
+  "51": "🇵🇪 Perú",
+  "53": "🇨🇺 Cuba",
+  "91": "🇮🇳 India"
 };
 
+function obtenerPais(numero) {
+  let num = numero.replace("@s.whatsapp.net", "");
+  let codigo = Object.keys(paises).find(pref => num.startsWith(pref));
+  return paises[codigo] || "🌐 Desconocido";
+}
+
 export async function before(m, { conn, participants, groupMetadata }) {
-  if (
-    !m.messageStubType ||
-    !m.isGroup ||
-    !m.messageStubParameters?.[0] ||
-    !global.db.data.chats[m.chat]?.welcome
-  ) return !0
+  if (!m.messageStubType || !m.isGroup) return;
+  if (m.chat === "120363416711925079@g.us") return;
 
-  const jid = m.messageStubParameters[0]
-  const user = `@${jid.split('@')[0]}`
-  const thumbnailUrl = 'https://qu.ax/UMbGb.jpg'
-  const pp = await conn.profilePictureUrl(jid, 'image').catch(() => thumbnailUrl)
-  const img = await fetch(pp).then(r => r.buffer())
-  const total = [28, 32].includes(m.messageStubType)
-    ? participants.length - 1
-    : participants.length + 1
+  let who = m.messageStubParameters[0];
+  let taguser = `@${who.split("@")[0]}`;
+  let chat = global.db.data.chats[m.chat];
+  let totalMembers = participants.length;
+  let date = new Date().toLocaleString("es-ES", { timeZone: "America/Mexico_City" });
 
-  // Contexto newsletter/canal
-  const contextNewsletter = {
-    isForwarded: true,
-    forwardingScore: 999,
-    forwardedNewsletterMessageInfo: {
-      newsletterJid: channelRD.id,
-      newsletterName: channelRD.name,
-      serverMessageId: -1
-    },
-    externalAdReply: {
-      title: channelRD.name,
-      body: '⁖ฺ۟̇࣪·֗٬̤⃟🔥𝐃𝐞𝐧𝐣𝐢 ✰ 𝐁𝐨𝐭 𝐌𝐃 ⬣',
-      thumbnailUrl: thumbnailUrl,
-      mediaType: 1,
-      renderLargerThumbnail: false,
-      sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
+  let pais = obtenerPais(who);
+
+  let frasesBienvenida = [
+    "Disfruta tu estadia en este grupo.",
+    "Espero y leas la descripción.",
+    "Diviértete y participa en las conversaciones.",
+    "¡Un placer tenerte aquí!",
+    "¡Bienvenido! Esperamos que la pases genial con nosotros.",
+  ];
+  let frasesDespedida = [
+    "Esperamos verte pronto de nuevo.",
+    "¡Suerte en tus proyectos futuros!",
+    "Hasta la próxima, cuídate.",
+    "Nos vemos en otra ocasión.",
+    "¡Fue un placer tenerte aquí! Mucho gusto.",
+  ];
+
+  let fraseRandomBienvenida = frasesBienvenida[Math.floor(Math.random() * frasesBienvenida.length)];
+  let fraseRandomDespedida = frasesDespedida[Math.floor(Math.random() * frasesDespedida.length)];
+
+  let imagenUrl = 'https://qu.ax/dYhOj.jpg';
+
+  if (chat.welcome) {
+    if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
+      let bienvenida = `
+*━━━─────━━━─── 「 ✰BIENVENIDO✰ 」
+━━━─────━━━───*
+╭─➪「 ✐ ${taguser}  」
+│ 𝗕𝗶𝗲𝗻𝘃𝗲𝗻𝗶𝗱𝗼  𝗮 ${groupMetadata.subject}
+│Miembros: ${totalMembers + 1}
+│Soy Denji-Bot el bot tuyo 
+│y de todos.
+╰─━━━─────━━━─
+*${fraseRandomBienvenida}*
+      `.trim();
+
+      await conn.sendMessage(m.chat, {
+        image: { url: imagenUrl },
+        caption: bienvenida,
+        mentions: [who]
+      });
     }
-  };
 
-  // Mensaje citado para bienvenida/despedida
-  const quotedMsg = (txt) => ({
-    key: { fromMe: false, participant: "0@s.whatsapp.net", remoteJid: m.chat, id: Math.random().toString(36).slice(2) },
-    message: { conversation: txt }
-  });
+    if (
+      m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE ||
+      m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE
+    ) {
+      let despedida = `
+*━━━─────━━━─── 
+「 ✰     𝐀𝐃𝐈𝐎𝐒     ✰ 」
+━━━─────━━━───*
+╭─➪「 ✐ ${taguser} 」
+│ Grupo: ${groupMetadata.subject}
+│Ahora somos ${totalMembers + 1} miembros
+╰─━━━─────━━━─
+*${fraseRandomDespedida}*
+      `.trim();
 
-  if (m.messageStubType == 27) {
-    const bienvenida = `
-🎉 ¡Bienvenido/a ${user} al grupo ${groupMetadata.subject}! 🎉
-
-Estamos súper emocionados de tenerte aquí con nosotros. 🎈✨ Prepárate para compartir risas, aprender y disfrutar de grandes momentos juntos. 💥💖
-
-No dudes en presentarte y contarnos un poco sobre ti. ¡Vamos a hacer que esto sea increíble! 🚀😄
-
-¡Bienvenido/a ${user} a la familia! que ahora somos ${total} Miembros🥳🎊
-`
-    // Mensaje de bienvenida como newsletter
-    await conn.sendMessage(m.chat, { 
-      image: img, 
-      caption: bienvenida, 
-      contextInfo: contextNewsletter 
-    });
-    // Mensaje adicional, respondiendo a 《✧》 LLEGO OTRO
-    await conn.sendMessage(m.chat, { 
-      text: 'Hola Bienvenid@.', 
-      contextInfo: contextNewsletter
-    }, { quoted: quotedMsg('Quisiera ver a mi querida Makima') });
-  }
-
-  if ([28, 32].includes(m.messageStubType)) {
-    const despedida = `
-╭─⬣「 ✰ADIOS✰ 」⬣
-┃
-┃💥 Usuario: ${user}
-┃🔥 Grupo: ${groupMetadata.subject}
-┃💥 Miembros: ${total}
-┃
-┃⌬ Espero y vuelvas después.
-╚━━━━━━━━━━━━━━━╝
-`
-    // Mensaje de despedida como newsletter
-    await conn.sendMessage(m.chat, { 
-      image: img, 
-      caption: despedida, 
-      contextInfo: contextNewsletter 
-    });
-    // Segundo mensaje, respondiendo a 《✧》 SE FUE
-    await conn.sendMessage(m.chat, { 
-      text: 'Espero y el usuario vuelva pronto.', 
-      contextInfo: contextNewsletter
-    }, { quoted: quotedMsg('Nunca dejare de amar a Makima') });
+      await conn.sendMessage(m.chat, {
+        image: { url: imagenUrl },
+        caption: despedida,
+        mentions: [who]
+      });
+    }
   }
 }
