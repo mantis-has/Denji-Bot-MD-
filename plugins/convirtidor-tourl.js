@@ -1,23 +1,30 @@
-import uploadFile from '../lib/uploadFile.js';
-import uploadImage from '../lib/uploadImage.js';
+import uploadFile from '../lib/uploadFile.js'
+import uploadImage from '../lib/uploadImage.js'
 import fetch from 'node-fetch'
-const handler = async (m) => {
-const q = m.quoted ? m.quoted : m;
-const mime = (q.msg || q).mimetype || '';
-if (!mime) throw `*${await tr("Responde a una imagen o video el cual sera convertido a enlace")}*`
-const media = await q.download();
-try {
-const isTele = /image\/(png|jpe?g|gif)|video\/mp4/.test(mime);
-const link = await (isTele ? uploadImage : uploadFile)(media);
-m.reply(link);
+
+let handler = async (m) => {
+  let q = m.quoted ? m.quoted : m
+  let mime = (q.msg || q).mimetype || ''
+  if (!mime) return conn.reply(m.chat, '🍃 Responde a una *Imagen* o *Vídeo.*', m)
+  try {
+  let media = await q.download()
+  let isTele = /image\/(png|jpe?g|gif)|video\/mp4/.test(mime)
+  let link = await (isTele ? uploadImage : uploadFile)(media)
+  let img = await (await fetch(`${link}`)).buffer()
+  let txt = `乂  *L I N K - C A T B O X*  乂\n\n`
+      txt += `*» Enlace* : ${link}\n`
+      txt += `*» Tamaño* : ${formatBytes(media.length)}\n`
+      txt += `*» Expiración* : ${isTele ? 'No expira' : 'Desconocido'}\n\n`
+      txt += `> *${dev}*`
+
+await conn.reply(m.chat, txt, m, rcanal)
 } catch (e) {
-console.log(e) 
+await conn.reply(m.chat, '⚠︎ *Error:* ' + e, m)
 }}
-handler.help = ['tourl <reply image>'];
-handler.tags = ['convertidor']
-handler.command = /^(upload|tourl)$/i;
-handler.register = true
-export default handler;
+handler.help = ['tourl']
+handler.tags = ['tools']
+handler.command = ['tourl', 'catbox']
+export default handler
 
 function formatBytes(bytes) {
   if (bytes === 0) {
