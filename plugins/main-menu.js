@@ -134,7 +134,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
 .       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
  ╭ֹ┈ ⵿❀⵿ ┈╮NUEVOS
 ┃┈➤ #artista [nombre]
-┃┈➤ #dalle2
+┃┈➤ #dalle
 ┃┈➤ #repeat
 ┃┈➤ #repite
 ┃┈➤ #copiame
