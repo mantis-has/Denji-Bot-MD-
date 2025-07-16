@@ -26,6 +26,6 @@ const handler = async (m, {conn, isROwner, usedPrefix, command, text}) => {
 };
 handler.help = ['getplugin'].map((v) => v + ' *<nombre>*');
 handler.tags = ['owner'];
-handler.command = ['getplugin','gp'];
+handler.command = ['getplugin','getplugins'];
 handler.rowner = true;
 export default handler;
