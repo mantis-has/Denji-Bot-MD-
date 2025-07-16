@@ -15,7 +15,7 @@ console.log(e)
 }}
 handler.help = ['tourl <reply image>'];
 handler.tags = ['convertidor']
-handler.command = /^(upload|tourl)$/i;
+handler.command = /^(upload|catbox)$/i;
 handler.register = true
 export default handler;
 
