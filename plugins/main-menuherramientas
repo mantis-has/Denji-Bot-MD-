@@ -95,7 +95,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
       let uptime = clockString(_uptime);
       let totalreg = Object.keys(global.db.data.users).length;
       let taguser = '@' + m.sender.split("@s.whatsapp.net")[0];
-      const emojis = '🩵';
+      const emojis = '🛠️';
       const error = '❌';
 
       let botname = global.botNames[conn.user.jid]; // Nombre del bot específico para esta sesión
