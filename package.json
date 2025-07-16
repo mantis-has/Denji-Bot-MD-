@@ -1,6 +1,6 @@
 {
-"name": "Makima-MD",
-"version": "2.0.1",
+"name": "Denji-Bot-MD-",
+"version": "4.1.0",
 "description": "El mejor bot ",
 "main": "index.js",
 "type": "module",
@@ -16,20 +16,20 @@
 "eslint": "eslint .",
 "eslintfix": "eslint --fix ."
 },
-"homepage": "https://github.com/mantis-has/Makima",
+"homepage": "https://github.com/mantis-has/Denji-Bot-MD-",
 "author": {
-"name": "Félix"
+"name": "mantis-has"
 },
 "repository": {
 "type": "git",
-"url": "git+https://github.com/mantis-has/Makima.git"
+"url": "git+https://github.com/mantis-has/Denji-Bot-MD-.git"
 },
 "bugs": {
-"url": "https://github.com/mantis-has/Makima/issues"
+"url": "https://github.com/thecarlos19/black-clover-MD/issues"
 },
 "license": "GPL-3.0-or-later",
 "dependencies": {
-"@whiskeysockets/baileys": "npm:@baileys-md/stable",
+"@whiskeysockets/baileys": "GataNina-Li/Baileys",
 "@adiwajshing/keyed-db": "^0.2.4",
 "@bochilteam/scraper": "^4.2.4",
 "@bochilteam/scraper-sosmed": "^1.0.5",
