@@ -67,7 +67,7 @@ var handler = async (m, { conn }) => {
   let prem = `
 🩵〘 𝐔𝐒𝐔𝐀𝐑𝐈𝐎 𝐏𝐑𝐄𝐌𝐈𝐔𝐌 〙🩵
 
-ERES RECONOCIDO EN MAKIMA』
+ERES RECONOCIDO EN DENJI』
 
 🩵 *Usuario:* ${username}
 🩵 *tag:* @${who.replace(/@.+/, '')}
