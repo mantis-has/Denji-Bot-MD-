@@ -1,40 +1,34 @@
-// OfcKing >> https://github.com/OfcKing
-/* ARCHIVO EDITADO , CREADO O MEJORADO
-POR The Carlos 
-*/
 import uploadFile from '../lib/uploadFile.js';
 import uploadImage from '../lib/uploadImage.js';
-import fetch from 'node-fetch';
-
-let handler = async (m, { conn, usedPrefix, command }) => {
-  try {
-    if (!m.quoted) return m.reply(`⚔️ Por favor, responde a una imagen con el comando *${usedPrefix + command}* para convertirla en una URL.`);
-
-    const mime = m.quoted.mimetype || '';
-    if (!mime.includes('image')) return m.reply('✐ El archivo citado no es una imagen.');
-
-    const media = await m.quoted.download();
-    if (!media) return m.reply('⚔️ No se pudo descargar la imagen. Asegúrate de que estás respondiendo a una imagen.');
-
-    let url = '';
-    
-    if (mime.startsWith('image')) {
-      url = await uploadImage(media);
-    } else {
-      url = await uploadFile(media);
-    }
-
-    if (!url) return m.reply('⚔️ No se pudo subir la imagen.');
-
-    m.reply(`⚔️ *U P L O A D - C A T B O X*\n\n${url}\n\n${dev}`);
-  } catch (error) {
-    console.error(error);
-    m.reply('⚔️ Hubo un error al intentar convertir la imagen en una URL.');
-  }
-};
-
-handler.help = ['tourl'];
-handler.tags = ['tools'];
-handler.command = ['tourl'];
-
+import fetch from 'node-fetch'
+const handler = async (m) => {
+const q = m.quoted ? m.quoted : m;
+const mime = (q.msg || q).mimetype || '';
+if (!mime) throw `*${await tr("Responde a una imagen o video el cual sera convertido a enlace")}*`
+const media = await q.download();
+try {
+const isTele = /image\/(png|jpe?g|gif)|video\/mp4/.test(mime);
+const link = await (isTele ? uploadImage : uploadFile)(media);
+m.reply(link);
+} catch (e) {
+console.log(e) 
+}}
+handler.help = ['tourl <reply image>'];
+handler.tags = ['convertidor']
+handler.command = /^(upload|tourl)$/i;
+handler.register = true
 export default handler;
+
+function formatBytes(bytes) {
+  if (bytes === 0) {
+    return '0 B';
+  }
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
+  const i = Math.floor(Math.log(bytes) / Math.log(1024))
+  return `${(bytes / 1024 ** i).toFixed(2)} ${sizes[i]}`;
+}
+
+async function shortUrl(url) {
+        let res = await fetch(`https://tinyurl.com/api-create.php?url=${url}`)
+        return await res.text()
+}
