@@ -11,7 +11,7 @@ const handler = async (m, { isOwner, isAdmin, conn, participants, args, usedPref
 
   const pesan = args.join(' ');
   const invocador = m.pushName || 'Administrador';
-  const pp = 'https://qu.ax/lRCWR.jpg'; // FOTO que me diste
+  const pp = 'https://qu.ax/gScos.jpg'; // Imagen para el comando 
 
   let teks = `╭─╮︹︹⊹︹︹⊹︹︹⊹︹︹╭─╮
   𝗜𝗡𝗩𝗢𝗖𝗔𝗡𝗗𝗢 𝗚𝗥𝗨𝗣𝗢
@@ -33,7 +33,7 @@ const handler = async (m, { isOwner, isAdmin, conn, participants, args, usedPref
 
 handler.help = ['tagall *<mensaje>*', 'invocar *<mensaje>*'];
 handler.tags = ['grupo'];
-handler.command = ['tagall', 'invocar'];
+handler.command = ['tagall', 'todos', 'mensionall', 'invocar'];
 handler.admin = true;
 handler.group = true;
 export default handler;
