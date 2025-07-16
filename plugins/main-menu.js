@@ -107,6 +107,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
 ┃Baileys: Multi device
 ┃Moneda actual: ${moneda}
 ┃Registros: ${totalreg}
+┃Bot oficial: ${botNumber}
 ╰━━━━━━━━━━━━━
 
 ╭━━INFO USUARIO━╮
