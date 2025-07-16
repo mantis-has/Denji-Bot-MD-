@@ -1,290 +1,411 @@
-let handler = async (m, { conn, args }) => {  
-  let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender  
-  let userData = global.db.data.users[userId] || {};  
-  let exp = userData.exp || 0;  
-  let coin = userData.coin || 0;  
-  let level = userData.level || 0;  
-  let role = userData.role || 'Sin Rango';  
+//* Código creado por Félix, no quites créditos *//
 
-  let name = await conn.getName(userId);  
-  let _uptime = process.uptime() * 1000;  
-  let uptime = clockString(_uptime);  
-  let totalreg = Object.keys(global.db.data.users).length;  
-  let totalCommands = Object.values(global.plugins).filter((v) => v.help && v.tags).length;  
+import fs from 'fs';
+import fetch from 'node-fetch';
+import { xpRange } from '../lib/levelling.js';
+import { promises } from 'fs';
+import { join } from 'path';
 
-  let images = [
-    'https://qu.ax/lRCWR.jpg',
-    'https://qu.ax/bXinP.jpg',
-    'https://qu.ax/lMRVV.jpg',
-    'https://qu.ax/UMbGb.jpg'
-  ]
-  let imgUrl = images[Math.floor(Math.random() * images.length)]  
+// Creamos un objeto global para almacenar el banner y el nombre por sesión
+global.bannerUrls = {}; // Almacenará las URLs de los banners por sesión
+global.botNames = {};   // Almacenará los nombres personalizados por sesión
 
-  let txt = `
-¡𝐇𝐨𝐥𝐚! ${name} 𝐒𝐨𝐲 *Denji* ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Sub-Bot)')}
+let handler = async (m, { conn, usedPrefix, text, command }) => {
+  try {
+    // Inicializamos el banner y el nombre por sesión si no existen
+    if (!global.bannerUrls[conn.user.jid]) {
+      global.bannerUrls[conn.user.jid] = 'https://qu.ax/ifPGY.jpg'; // URL inicial de la imagen del menú
+    }
+    if (!global.botNames[conn.user.jid]) {
+      global.botNames[conn.user.jid] = '𝗗𝗲𝗻𝗷𝗶'; // Nombre inicial del bot
+    }
 
-╔━━ INFO-BOT ━━━━╗
-┃Creador: Félix Manuel 
+    // Verificar si el usuario es el socket activo
+    const isSocketActive = conn.user.jid === m.sender;
+
+    // Comando para cambiar el banner (solo permitido para el socket activo)
+    if (command === 'setbanner') {
+      if (!isSocketActive) {
+        return await m.reply('「🩵」Este comando solo puede ser usado por el socket.', m);
+      }
+      if (!text) {
+        return await m.reply('✘ Por favor, proporciona un enlace válido para la nueva imagen del banner.', m);
+      }
+      global.bannerUrls[conn.user.jid] = text.trim(); // Actualiza el banner solo para esta sesión
+      return await m.reply('「🩵」El banner fue actualizado con éxito...', m);
+    }
+
+    // Comando para cambiar el nombre del bot (solo permitido para el socket activo)
+    if (command === 'setname') {
+      if (!isSocketActive) {
+        return await m.reply('「🩵」Este comando solo puede ser usado por el socket.', m);
+      }
+      if (!text) {
+        return await m.reply('「🩵」¿Qué nombre deseas agregar al socket?', m);
+      }
+      global.botNames[conn.user.jid] = text.trim(); // Actualiza el nombre solo para esta sesión
+      return await m.reply('「🩵」El nombre fue actualizado con éxito...', m);
+    }
+
+    // Comandos para el menú y "CARGANDO COMANDOS" (pueden ser usados por cualquier usuario)
+    if (command === 'menu' || command === 'help' || command === 'menú') {
+      // Variables para el contexto del canal
+      const dev = 'Félix Manuel';
+      const redes = 'https://github.com/Andresv27728/2.0';
+      const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" };
+      let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
+      let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/mqtxvp.jpg');
+
+      // Mensaje de "CARGANDO COMANDOS..." con contexto de canal y respondiendo al mensaje
+      await conn.sendMessage(m.chat, {
+        text: 'ꪹ͜🕑͡ 𝗘𝗝𝗘𝗖𝗨𝗧𝗔𝗡𝗗𝗢 𝗠𝗢𝗧𝗢𝗦𝗜𝗘𝗥𝗥𝗔𝗦...𓏲⚙️੭',
+        contextInfo: {
+          isForwarded: true,
+          forwardedNewsletterMessageInfo: {
+            newsletterJid: channelRD.id,
+            newsletterName: channelRD.name,
+            serverMessageId: -1,
+          },
+          forwardingScore: 999,
+          externalAdReply: {
+            title: 'El poder de Denji',
+            body: dev,
+            thumbnailUrl: perfil,
+            sourceUrl: redes,
+            mediaType: 1,
+            renderLargerThumbnail: false,
+          },
+        }
+      }, { quoted: m });
+
+      // Datos usuario y menú
+      let { exp, chocolates, level, role } = global.db.data.users[m.sender];
+      let { min, xp, max } = xpRange(level, global.multiplier);
+      let nombre = await conn.getName(m.sender);
+      let _uptime = process.uptime() * 1000;
+      let _muptime;
+      if (process.send) {
+        process.send('uptime');
+        _muptime = await new Promise(resolve => {
+          process.once('message', resolve);
+          setTimeout(resolve, 1000);
+        }) * 1000;
+      }
+      let muptime = clockString(_muptime);
+      let uptime = clockString(_uptime);
+      let totalreg = Object.keys(global.db.data.users).length;
+      let taguser = '@' + m.sender.split("@s.whatsapp.net")[0];
+      const emojis = '🩵';
+      const error = '❌';
+
+      let botname = global.botNames[conn.user.jid]; // Nombre del bot específico para esta sesión
+      let menu = `¡Hola! ${taguser} soy ${botname} ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Sub-Bot)')} 
+
+╭━━I N F O-B O-T━━
+┃Creador: 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪
 ┃Tiempo activo: ${uptime}
-┃Comandos: ${totalCommands}
+┃Baileys: Multi device
+┃Moneda actual: ${moneda}
 ┃Registros: ${totalreg}
-╚━━━━━━━━━━━━━━━╝
+╰━━━━━━━━━━━━━
 
-╔━━ INFO-USER ━━━╗
-┃Exp: ${exp}
-┃Diamantes: ${coin}
-┃Nivel: ${level}
+╭━━INFO USUARIO━╮
+┃Nombre: ${nombre}
 ┃Rango: ${role}
-╚━━━━━━━━━━━━━━━╝
-> Conéctate Como Subbot usando #code o #qr y luego los pasos de la vinculación
+┃Nivel: ${level}
+┃Coins: ${chocolates}
+╰━━━━━━━━━━━━━
 
-✰ 𝗟𝗜𝗦𝗧𝗔 𝗗𝗘 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦 ✰
+➪ 𝗟𝗜𝗦𝗧𝗔 
+       ➪  𝗗𝗘 
+           ➪ 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦
+
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮PRINCIPALES
+┃┈➤ #estado
+┃┈➤ #botreglas
+┃┈➤ #menu
+┃┈➤ #menu2
+┃┈➤ #uptime
+┃┈➤ #menulista
+╰━━━━━━━━━━━━━
+
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮NUEVOS
+┃┈➤ #artista [nombre]
+┃┈➤ #dalle2
+┃┈➤ #repeat
+┃┈➤ #repite
+┃┈➤ #copiame
+┃┈➤ #soccer
+┃┈➤ #rcjugador
+┃┈➤ #rgjugador
+┃┈➤ #vtjugador
+╰━━━━━━━━━━━━━━━━━━
+
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮PERSONALIZACIÓN
+┃┈➤ #set
+╰━━━━━━━━━━━━━━━━━━
+
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮SUBBOTS
+┃┈➤ #setname
+┃┈➤ #setbanner
+┃┈➤ #code
+┃┈➤ #qr
+╰━━━━━━━━━━━━━━━━━━
+
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮BUSCADORES
+┃┈➤ #gitthubsearch
+┃┈➤ #google [Búsqueda]
+┃┈➤ #tiktoksearch
+┃┈➤ #pinterest
+┃┈➤ #imagen [querry]
+╰━━━━━━━━━━━━━━━━━━
+
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮JUEGOS
+┃┈➤ #abrazar
+┃┈➤ #acertijo
+┃┈➤ #agarrar
+┃┈➤ #ahorcado
+┃┈➤ #besar
+┃┈➤ #acariciar
+┃┈➤ #golpear
+┃┈➤ #pregunta
+┃┈➤ #reto
+┃┈➤ #triste
+┃┈➤ #reto
+┃┈➤ #bot
+┃┈➤ #love
+┃┈➤ #consejo
+┃┈➤ #dance
+┃┈➤ #nombreninja
+┃┈➤ #meme
+┃┈➤ #dormir 
+┃┈➤ #rata
+┃┈➤ #enamorada
+┃┈➤ #gay
+┃┈➤ #manco
+┃┈➤ #apostar
+┃┈➤ #piropo
+┃┈➤ #sonrojarse
+┃┈➤ #agarrar
+╰━━━━━━━━━━━━━━━━━━
 
 
-╭─⬣「 ✰𝐈𝐧𝐟𝐨✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟🔥 #botreglas
-│⁖ฺ۟̇࣪·֗٬̤⃟🔥 #comprarbot
-│⁖ฺ۟̇࣪·֗٬̤⃟🔥 #uptime
-│⁖ฺ۟̇࣪·֗٬̤⃟🔥 #menu
-│⁖ฺ۟̇࣪·֗٬̤⃟🔥 #estado
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮WAIFU
+┃┈➤ #robarpersonaje
+┃┈➤ #obtenidos
+┃┈➤ #sacar
+┃┈➤ #guardar
+┃┈➤ #carrw
+┃┈➤ #confirmar
+┃┈➤ #character
+┃┈➤ #roll
+┃┈➤ #top
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰𝐑𝐏𝐆✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #minar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #depositar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #daily
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #bal
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #buy
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #buyall
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #rob
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #rob2
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #robar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #robarxp
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #soccer
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #rcjugador
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #rgjugador
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #vtjugador
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #w
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #retirar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #tranferir
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #lb
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #levelup
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #lvl
-╰─⬣
 
-╭─⬣「 ✰𝐁𝐮𝐬𝐜𝐚𝐝𝐨𝐫𝐞𝐬✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #gitthubsearch 
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #google
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #imagen
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮REGISTROS
+┃┈➤ #reg
+┃┈➤ #unreg
+┃┈➤ #profile
+┃┈➤ #usuarios
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰𝐃𝐞𝐬𝐜𝐚𝐫𝐠𝐚𝐬✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #fb
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #play
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #playvid
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #ytmp3doc
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #ytmp4doc
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #ytmp4
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #ytmp3
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #tiktok
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #ig
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #twiter 
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #spotify
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #gitclone
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #mediafire
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #apk
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #apkmod
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮ECONOMIA
+┃┈➤ #daily
+┃┈➤ #bank
+┃┈➤ #robar
+┃┈➤ #robarxp
+┃┈➤ #rob2
+┃┈➤ #levelup
+┃┈➤ #lb
+┃┈➤ #mine
+┃┈➤ #retirar
+┃┈➤ #trabajar
+┃┈➤ #transferir
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰𝐆𝐫𝐮𝐩𝐨𝐬✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #group abrir 
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #group cerrar 
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #delete
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #demote 
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #promote 
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #encuesta
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #rentar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #kick
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #kickall
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #tag
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #invite
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮DESCARGAS
+┃┈➤ #fb
+┃┈➤ #play
+┃┈➤ #playvid
+┃┈➤ #mediafire
+┃┈➤ #apkmod
+┃┈➤ #ytmp3doc
+┃┈➤ #ytmp4doc
+┃┈➤ #ig
+┃┈➤ #gitclone
+┃┈➤ #tiktok
+┃┈➤ #spotify
+┃┈➤ #tw
+┃┈➤ #ytmp4 
+┃┈➤ #imagen [querry]
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰𝐑𝐞𝐠𝐢𝐬𝐭𝐫𝐨𝐬✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #reg
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #unreg
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #profile
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #perfil
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #usuarios
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮GRUPOS
+┃┈➤ #group abrir 
+┃┈➤ #group cerrar 
+┃┈➤ #delete
+┃┈➤ #setppgroup
+┃┈➤ #encuesta
+┃┈➤ #rentar
+┃┈➤ #kick
+┃┈➤ #promote
+┃┈➤ #demote
+┃┈➤ #tagall 
+┃┈➤ #tag
+┃┈➤ #invite 
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰𝐖𝐚𝐢𝐟𝐮✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #rollwaifu
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #robarpersonaje
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #waifu
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #rw
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #claim
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #carrw
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #guardar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #confirmar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #character
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #roll
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #obtenidos 
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #confirmar 
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮STICKERS
+┃┈➤ #wm [autor]
+┃┈➤ #s
+┃┈➤ #qc
+┃┈➤ #toimg
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #abrazar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #besar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #dormir
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #kill
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #agarrar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #acariciar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #acertijo
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #ahorcado
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #pregunta
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #reto
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #bot
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #triste
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #consejo
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #dance
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #nombreninja
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #love
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #piropo
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #apostar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #manco
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #gay
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #rata
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #meme
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #enamorada 
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #agarrar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #sonrojarse
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮DATABASE
+┃┈➤ #delvn
+┃┈➤ #demsg
+┃┈➤ #delimg
+┃┈➤ #delsticker
+┃┈➤ #infobot
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰𝐒𝐢𝐬𝐭𝐞𝐦𝐚✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #repeat
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #repite
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #copiame
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #dalle2
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #artista
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮EXPERIENCIA
+┃┈➤ #buy
+┃┈➤ #buyall
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰𝐈𝐧𝐟𝐨✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #code
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #qr
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #bots
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮CONFIGURACIÓN
+┃┈➤ #enable
+┃┈➤ #disable
+┃┈➤ #on
+┃┈➤ #off
+╰━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰𝐈𝐧𝐟𝐨✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #s
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #qc
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #brat
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #toimg
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #tovideo
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮ANIME
+┃┈➤ #toanime
+┃┈➤ #tts
+┃┈➤ #remini
+┃┈➤ #enhance
+┃┈➤ #hd
+┃┈➤ #nuevafotochannel
+┃┈➤ #nosilenciarcanal
+┃┈➤ #silenciarcanal
+┃┈➤ #seguircanal
+┃┈➤ #inspect
+┃┈➤ #infobot
+┃┈➤ #readvo
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐜𝐢𝐨́𝐧✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #on
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #off
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #enable
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #disable
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮INFORMACIÓN
+┃┈➤ #creador
+┃┈➤ #owner
+┃┈➤ #reportar
+┃┈➤ #ping
+┃┈➤ #links
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰𝐀-𝐈✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #toanime
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #tts
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #inspect
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #inspeccionar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #hd
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #seguircanal
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #nuevafotochannel
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮CREADOR
+┃┈➤ #addprem
+┃┈➤ #copia
+┃┈➤ #broadcastgroup
+┃┈➤ #bcgb
+┃┈➤ #bcgb2
+┃┈➤ #broadcast
+┃┈➤ #bc
+┃┈➤ #cheat
+┃┈➤ #delprem
+┃┈➤ #dsowner
+┃┈➤ #fixmsgespera
+┃┈➤ #get
+┃┈➤ #prefix
+┃┈➤ #reiniciar 
+┃┈➤ #saveplugin 
+┃┈➤ #update
+┃┈➤ #resetpersonajes
+┃┈➤ #autoadmin
+┃┈➤ #banuser
+┃┈➤ #unbanuser
+┃┈➤ #banchat
+┃┈➤ #unbanchat
+┃┈➤ #ip
+┃┈➤ #join
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰Info-2✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #owner
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #creador
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #p
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #links
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #reportar 
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #report
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #ping
-╰─⬣
+.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
+ ╭ֹ┈ ⵿❀⵿ ┈╮A - I
+┃┈➤ #dalle
+┃┈➤ #simi
+┃┈➤ #ai
+┃┈➤ #tovideo
+┃┈➤ #togifaud
+╰━━━━━━━━━━━━━━━━━━
 
-╭─⬣「 ✰𝐂𝐫𝐞𝐚𝐝𝐨𝐫✰ 」⬣
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #addprem
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #addcoins
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #addcmd
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #addowner 
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #addsoporte
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #menusoporte
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #soporteinfo
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #soportekick
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #delprem
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #delowner
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #delsoporte 
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #copia
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #resetpersonaje
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #update
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #resetuser
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #autoadmin
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #join
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #banuser
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #banchat
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #unbanuser
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #unbanchat
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #block
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #unblock
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #lisblock
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #ip
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #prefix
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #ss
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #get
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #reiniciar
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #dsowner
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #ds
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #bc
-│⁖ฺ۟̇࣪·֗٬̤⃟💎 #broadcast
-╰─⬣
 
-> © Desarrollado por Félix
-`.trim();
+> © ⍴᥆ᥕᥱrᥱძ ᑲᥡ Félix Manuel`.trim(); // El resto del menú permanece igual
 
-  let imgBuffer = await fetch(imgUrl).then(res => res.buffer());  
+      // Enviar el menú con el banner y nombre específico para esta sesión y respondiendo al mensaje
+      await conn.sendMessage(m.chat, {
+        image: { url: global.bannerUrls[conn.user.jid] },
+        caption: menu,
+        contextInfo: {
+          mentionedJid: [m.sender],
+          isForwarded: true,
+          forwardedNewsletterMessageInfo: {
+            newsletterJid: channelRD.id,
+            newsletterName: channelRD.name,
+            serverMessageId: -1,
+          },
+          forwardingScore: 999,
+          externalAdReply: {
+            title: '𝐃𝐞𝐧𝐣𝐢 𝐁o͟T͎ 𝙼𝙳',
+            body: dev,
+            thumbnailUrl: perfil,
+            sourceUrl: redes,
+            mediaType: 1,
+            renderLargerThumbnail: false,
+          },
+        }
+      }, { quoted: m });
 
-  await conn.sendMessage(m.chat, {   
-    text: txt,  
-    image: imgBuffer,  
-    contextInfo: {  
-      mentionedJid: [m.sender, userId],  
-      isForwarded: true,  
-      forwardedNewsletterMessageInfo: {  
-        newsletterJid: '120363402362088282@newsletter',  
-        newsletterName: 'Denji × Makima',  
-        serverMessageId: -1,  
-      },  
-      forwardingScore: 999,  
-      externalAdReply: {  
-        title: 'DENJI BOT MD',  
-        body: 'Powered by Félix',
-        thumbnailUrl: imgUrl,  
-        sourceUrl: redes,  
-        mediaType: 1,  
-        showAdAttribution: true,  
-        renderLargerThumbnail: true,  
-      },  
-    },  
-  }, { quoted: m });  
-}  
+      await m.react(emojis);
+    }
 
-handler.help = ['menu'];  
-handler.tags = ['main'];  
-handler.command = ['menu', 'menú', 'help', 'allmenú', 'allmenu', 'menucompleto'];
+  } catch (e) {
+    await m.reply(`✘ Ocurrió un error cuando la lista de comandos se iba a enviar.\n\n${e}`, m);
+    await m.react(error);
+  }
+};
 
-export default handler;  
+handler.help = ['menu', 'setbanner', 'setname'];
+handler.tags = ['main'];
+handler.command = ['menu', 'help', 'menú', 'asistenciabot', 'comandosbot', 'listadecomandos', 'menucompleto', 'setbanner', 'setname'];
+handler.register = true;
 
-function clockString(ms) {  
-  let seconds = Math.floor((ms / 1000) % 60);  
-  let minutes = Math.floor((ms / (1000 * 60)) % 60);  
-  let hours = Math.floor((ms / (1000 * 60 * 60)) % 24);  
-  return `${hours}H ${minutes}M ${seconds}S`;  
+function clockString(ms) {
+  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000);
+  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60;
+  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60;
+  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':');
 }
+
+export default handler;
