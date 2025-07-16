@@ -71,7 +71,7 @@ ERES RECONOCIDO EN DENJI』
 
 🔥 *Usuario:* ${username}
 💥 *tag:* @${who.replace(/@.+/, '')}
-2 *Registrado:* ${registered ? '✅' : '❌'}
+🔥 *Registrado:* ${registered ? '✅' : '❌'}
 
 ╭━━━━━━━━━━━━━╮
 ┃🔥 *Nivel:* ${level}
