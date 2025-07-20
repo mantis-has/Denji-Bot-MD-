@@ -302,7 +302,6 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
  ╭ֹ┈ ⵿❀⵿ ┈╮ANIME
 ┃┈➤ #toanime
 ┃┈➤ #tts
-┃┈➤ #remini
 ┃┈➤ #enhance
 ┃┈➤ #hd
 ┃┈➤ #nuevafotochannel
