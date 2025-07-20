@@ -50,7 +50,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
     // Comandos para el menú y "CARGANDO COMANDOS" (pueden ser usados por cualquier usuario)
     if (command === 'menu' || command === 'help' || command === 'menú') {
       // Variables para el contexto del canal
-      const dev = 'Félix Manuel';
+      const dev = 'Deymoon Club';
       const redes = 'https://github.com/Andresv27728/2.0';
       const channelRD = { id: "120363402362088282@newsletter", name: "━━━───✰──━━━─" };
       let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
@@ -102,7 +102,6 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
       let menu = `¡Hola! ${taguser} soy ${botname} ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Sub-Bot)')} 
 
 ╭━━I N F O-B O-T━━
-┃Creador: 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪
 ┃Tiempo activo: ${uptime}
 ┃Baileys: Multi device
 ┃Moneda actual: ${moneda}
@@ -362,7 +361,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
 ╰━━━━━━━━━━━━━━━━━━
 
 
-> © ⍴᥆ᥕᥱrᥱძ ᑲᥡ Félix Manuel`.trim(); // El resto del menú permanece igual
+> © ⍴᥆ᥕᥱrᥱძ ᑲᥡ Deymoon Club`.trim(); // El resto del menú permanece igual
 
       // Enviar el menú con el banner y nombre específico para esta sesión y respondiendo al mensaje
       await conn.sendMessage(m.chat, {
