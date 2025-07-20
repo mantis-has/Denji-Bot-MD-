@@ -3,22 +3,22 @@ import fetch from 'node-fetch'
 let handler = async (m, { conn }) => {
 
   const namegrupo = 'Grupo Oficial'
-  const gp1 = 'https://chat.whatsapp.com/KoJjHo6o3Ew7P5qkjaIh0r' // ← tu link real
+  const gp1 = 'https://chat.whatsapp.com/K0DIkrutOQI6If1kdZ4l9D?mode=r_c' // ← tu link real
 
-  const namechannel = 'Canal de la Bot'
-  const channel = 'https://whatsapp.com/channel/0029VbAZcyIIXnlwp79iwu2l' // ← tu canal real
+  const namechannel = 'Canal del Bot'
+  const channel = 'https://whatsapp.com/channel/0029Vb5nxWWFHWq5CNFP5b21' // ← tu canal real
 
-  const dev = '💎 Creador: Félix Manuel'
-  const catalogo = 'https://qu.ax/pJCKB.jpg' // o './media/grupos.jpg'
+  const dev = '💎 Creador: Deymoon oficial'
+  const catalogo = 'https://qu.ax/prgKB.jpg' // o './media/grupos.jpg'
   const emojis = '👨‍💻'
 
   let grupos = `
-╭─⟪ *💎GRUPOS OFICIALES * 
+╭─⟪ GRUPOS OFICIALES
 │
-│ 🩵 *${namegrupo}*
+│  ${namegrupo}
 │ ${gp1}
 │
-│ 🩵 *${namechannel}*
+│  ${namechannel}
 │ ${channel}
 ╰─────────────────╯
 `
