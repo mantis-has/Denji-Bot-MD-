@@ -49,6 +49,6 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 
 handler.help = ['hade <responde a una imagen>'];
 handler.tags = ['herramientas'];
-handler.command = /^(hade|hd2|redmi2)$/i;
+handler.command = /^(hade|hd|redmi2)$/i;
 
 export default handler;
