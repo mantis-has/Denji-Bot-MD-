@@ -7,13 +7,13 @@ import sharp from 'sharp';
 let handler = async (m, { conn, usedPrefix, command }) => {
   let q = m.quoted;
   if (!q) {
-    return m.reply(`*[ ⚠️ ] Uso*\n${usedPrefix + command} <responde a una imagen>\n\n*nigga*`);
+    return m.reply(`Formato incorrecto.\n\nVerdadero uso: ${usedPrefix + command} <responde a una imagen.>`);
   }
 
   let mime = (q.msg || q).mimetype || '';
 
   if (!mime.startsWith('image/')) {
-    return m.reply(`*[ ⚠️ ] Uso*\n${usedPrefix + command} <responde a una imagen>\n\n*nigga*`);
+    return m.reply(`Formato incorrecto\n\nVerdadero uso: ${usedPrefix + command} <responde a una imagen.>`);
   }
   try {
  
