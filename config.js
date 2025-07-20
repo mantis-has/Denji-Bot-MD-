@@ -17,15 +17,15 @@ global.botNumber = '527222519827' //Ejemplo: 527222519827
 
 global.owner = [
   ['18293142989', '🩵 𝗖𝗿𝗲𝗮𝗱𝗼𝗿 🩵', true],
-  ['18293142989', 'felix', true],
-  ['527222518356', 'Félix México', true]
+  ['18293142989', 'f', true],
+  ['527222518356', 'México', true]
 ]
 
 //*─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─*
 
 global.owner_lid = [
   ['149963665342644', '🩵 𝗖𝗿𝗲𝗮𝗱𝗼𝗿 🩵 (LID)', true],
-  ['149963665342644', 'Félix (LID)', true]
+  ['149963665342644', 'F (LID)', true]
 ]
 
 //*─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─*
@@ -49,13 +49,13 @@ global.makiJadibts = true
 
 global.packsticker = `─✰─ׄ─ׅ─ׄ─✰─ׄ─✰─ׄ✰─ׄ\nBot: Denji Bot MD\n\nCreador: Félix Manuel\n\nTipo: Público\n\nUsuarios: 10927\n─✰─ׄ─ׅ─ׄ─✰─ׄ─✰─ׄ✰─ׄ\n\n`
 global.packname = `⏤͟͞ू⃪  ̸̷͢𝐃𝐞𝐧𝐣𝐢 𝐁𝐨𝐭𑁯ᰍ`
-global.author = `𝐒𝐭𝐢𝐜𝐤𝐞𝐫𝐬 𝐁𝐲 Félix Manuel`;
-global.wm = '⏤͟͞ू⃪  ̸̷͢𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 Félix Manuel';
-global.titulowm = '⏤͟͞ू⃪𝐃𝐞𝐧𝐣𝐢 𝐁𖹭t͟ 𝐁𝐨𝐭𑁯ᰍ';
-global.igfg = 'Felix'
+global.author = `𝐒𝐭𝐢𝐜𝐤𝐞𝐫𝐬 𝐁𝐲 Deymoom Club`;
+global.wm = '⏤͟͞ू⃪  ̸̷͢𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 Deymoon Club';
+global.titulowm = '⏤͟͞ू⃪𝐃𝐞𝐧𝐣𝐢 𝐁𖹭t͟𑁯ᰍ';
+global.igfg = 'Deymoon Club'
 global.botname = '𝐃𝐞𝐧𝐣𝐢 𝐁𝐨𝐭 𝐌𝐃'
-global.dev = '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ Félix Manuel'
-global.textbot = '𝐃𝐞𝐧𝐣𝐢 : Félix Manuel'
+global.dev = '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ Deymoon Club'
+global.textbot = '𝐃𝐞𝐧𝐣𝐢 : DEYMOON CLUB'
 global.gt = '͟͞𝐃𝐞𝐧𝐣𝐢';
 global.namechannel = '𝐃𝐞𝐧𝐣𝐢 𝐂𝐡a͟𝐧n͟e͟𝐥𑁯'
 
