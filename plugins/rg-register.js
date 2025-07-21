@@ -88,16 +88,16 @@ let handler = async function (m, { conn, text, args, usedPrefix, command }) {
 
 let chtxt = `👤 *𝖴𝗌uario* » ${m.pushName || 'Anónimo'}
 🗂 *𝖵𝖾𝗋𝗂𝖿𝗂𝖼𝖺𝖼𝗂𝗈́𝗇* » ${user.name}
-💎 *𝖤𝖽𝖺𝖽* » ${user.age} años
-🩵 *𝖨𝖣 𝖽𝖾 𝗋𝖾𝗀𝗂𝗌𝗍𝗋𝗈* »
+💠 *𝖤𝖽𝖺𝖽* » ${user.age} años
+⚙️ *𝖨𝖣 𝖽𝖾 𝗋𝖾𝗀𝗂𝗌𝗍𝗋𝗈* »
 ⤷ ${sn}`;
 
-    let channelID = '120363402615935849@newsletter';
+    let channelID = '120363402362088282@newsletter';
         await conn.sendMessage(channelID, {
         text: chtxt,
         contextInfo: {
             externalAdReply: {
-                title: "【 🩵 𝐍𝐔𝐄𝐕𝐎 𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 🩵 】",
+                title: "【 ⚙️ 𝐍𝐔𝐄𝐕𝐎 𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 ⚙️ 】",
                 body: '𝚁𝚎𝚐𝚒𝚜𝚝𝚛𝚘𝚜 𝙼𝚊𝚔𝚒𝚖𝚊 2.0 𝙱𝚘𝚝',
                 thumbnailUrl: perfil,
                 sourceUrl: redes,
